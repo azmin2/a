@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Registro - Valutazioni (Classe / Materia / Quadrimestre)</title>
+  <style>
+    :root{
+      --blue:#0073b7;
+      --bg:#f8f8f8;
+    }
+    body{ margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); }
+    header{ background:var(--blue); color:#fff; padding:12px; text-align:center; font-weight:700; }
+    nav{ background:#034f84; padding:8px 12px; color:#fff; display:flex; gap:12px; align-items:center; }
+    nav a{ color:#fff; text-decoration:none; font-weight:600; }
+    .toolbar{ padding:12px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; background:#e9ecef; }
+
+    select, button, input[type="date"]{ padding:6px 8px; font-size:14px; }
+    button{ cursor:pointer; border-radius:6px; border:0; background:var(--blue); color:#fff; }
+
+    .container{ padding:12px; }
+
+    table{ width:100%; border-collapse:collapse; background:#fff; }
+    th, td{ border:1px solid #ddd; padding:6px; text-align:center; font-size:13px; vertical-align:middle; }
+    th{ background:#f3f6fb; font-weight:700; }
+    td.student{ text-align:left; font-weight:600; padding-left:10px; }
+
+    .rosso{ color:red; font-weight:700; }
+    .verde{ color:green; font-weight:700; }
+    .nero{ color:black; font-weight:700; }
+
+    /* modal semplice */
+    .modal{ display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); justify-content:center; align-items:center; z-index:50; }
+    .modal.show{ display:flex; }
+    .modal-box{ background:#fff; padding:14px; border-radius:8px; width:320px; box-shadow:0 8px 20px rgba(0,0,0,0.15); }
+    .modal-box h3{ margin:0 0 8px 0; font-size:16px; }
+    .modal-row{ margin:8px 0; display:flex; flex-direction:column; gap:6px; }
+    .small{ font-size:12px; color:#555; }
+
+    input.voto{ width:60px; padding:4px 6px; font-size:13px; text-align:center; }
+    .actions{ display:flex; gap:8px; justify-content:flex-end; margin-top:10px; }
+    .btn-ghost{ background:#eee; color:#222; }
+    @media (max-width:720px){
+      .modal-box{ width:92%; }
+      table, th, td{ font-size:12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>Registro - Valutazioni</header>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Attività</a>
+    <a href="#">Voti</a>
+    <a href="#">Orario</a>
+  </nav>
+
+  <div class="toolbar">
+    Quadrimestre:
+    <select id="quadrimestreSelect">
+      <option value="1">1° Quadrimestre</option>
+      <option value="2">2° Quadrimestre</option>
+    </select>
+
+    Classe:
+    <select id="classeSelect">
+      <option value="1">1ª Superiore</option>
+      <option value="2">2ª Superiore</option>
+      <option value="3">3ª Superiore</option>
+      <option value="4">4ª Superiore</option>
+      <option value="5">5ª Superiore</option>
+    </select>
+
+    Materia (visualizzata):
+    <select id="materiaSelect">
+      <option>Italiano</option>
+      <option>Matematica</option>
+      <option>Storia</option>
+      <option>Geografia</option>
+      <option>Informatica</option>
+      <option>Arte</option>
+      <option>Musica</option>
+      <option>Ginnastica</option>
+      <option>Accoglienza</option>
+      <option>Orientamento</option>
+      <option>Recupero</option>
+      <option>Sicurezza</option>
+      <option>Disegno</option>
+    </select>
+
+    <button id="btnCreaVal">➕ Crea valutazione</button>
+
+    <div style="margin-left:auto;" class="small">
+      Nota: clicca una cella per modificare il voto (inserisci numero 10–100 o ASS / ESON).
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="registro-container"></div>
+  </div>
+
+  <!-- MODAL CREA VALUTAZIONE -->
+  <div id="modalCrea" class="modal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true">
+      <h3>Nuova valutazione</h3>
+      <div class="modal-row">
+        <label class="small">Materia</label>
+        <select id="modalMateria"></select>
+      </div>
+      <div class="modal-row">
+        <label class="small">Data</label>
+        <input type="date" id="modalData" />
+      </div>
+      <div class="actions">
+        <button class="btn-ghost" id="btnAnnulla">Annulla</button>
+        <button id="btnCreaConf">Crea</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* =========================
+   Dati studenti per classe
+   ========================= */
+const studenti = {
+  "1": [
+    "DEMATTEIS STELLINA","DEMATTEIS PANDINO","BENUA TARTARUGA","BENUA YUCKY",
+    "BENUA LOLLO","DEMATTEIS BRICIOLA","DEMATTEIS FLUFFY","DEMATTEIS TINA",
+    "BENUA GRIGETTA","DEMATTEIS LUNA","BENUA LUNA","DEMATTEIS KENDY",
+    "DEMATTEIS PAPERO","DEMATTEIS ATTIGLIO","DEMATTEIS CURT","BENUA BUNNY"
+  ],
+  "2": [
+    "DEMATTEIS CANE","BENUA CANE","DEMATTEIS MICIAN","TEMPERINI CICCIOBELLO",
+    "CAROTINI MAICOL","TEMPERINI CATTIVO","CAROTINI BAMBOLA","ROSETTI ROBOTTINA"
+  ],
+  "3": ["STUDENTE 3A","STUDENTE 3B","STUDENTE 3C"],
+  "4": ["STUDENTE 4A","STUDENTE 4B","STUDENTE 4C"],
+  "5": ["STUDENTE 5A","STUDENTE 5B","STUDENTE 5C"]
+};
+
+let registroDati = JSON.parse(localStorage.getItem('registroValutazioni_v2') || '{}');
+
+function salvaLocal(){
+  localStorage.setItem('registroValutazioni_v2', JSON.stringify(registroDati));
+}
+
+/* helper formato data */
+function isoToIt(iso){
+  if(!iso) return "";
+  const [y,m,d] = iso.split('-'); return `${d}/${m}/${y}`;
+}
+function todayIso(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+/* key corrente */
+function getKey(){
+  const classe = document.getElementById('classeSelect').value;
+  const quad = document.getElementById('quadrimestreSelect').value;
+  const materia = document.getElementById('materiaSelect').value;
+  return `${classe}_${quad}_${materia}`;
+}
+
+/* ====== rendering tabella ====== */
+function loadRegistro(){
+  const classe = document.getElementById('classeSelect').value;
+  const quad = document.getElementById('quadrimestreSelect').value;
+  const materia = document.getElementById('materiaSelect').value;
+  const key = getKey();
+  if(!registroDati[key]) registroDati[key] = { valutazioni: [], voti: {} };
+
+  const dati = registroDati[key];
+  const listaStudenti = studenti[classe] || [];
+
+  // header
+  let html = '<table><thead><tr><th>Studente</th>';
+  dati.valutazioni.forEach((v) => {
+    html += `<th>${v.data}</th>`;
+  });
+  html += '<th>Media</th></tr></thead><tbody>';
+
+  listaStudenti.forEach(nome => {
+    html += `<tr><td class="student">${nome}</td>`;
+    const votiArr = (dati.voti[nome] || []);
+    for(let i=0;i<dati.valutazioni.length;i++){
+      const voto = votiArr[i] === undefined ? '' : votiArr[i];
+      const colore = votoColorClass(voto);
+      html += `<td class="${colore}" data-stud="${escapeHtml(nome)}" data-idx="${i}" onclick="startEdit(this)">${escapeHtml(voto)}</td>`;
+    }
+    const media = calcMedia(votiArr);
+    const mediaClass = (media === '' ? '' : (media < 60 ? 'rosso' : 'verde'));
+    html += `<td class="${mediaClass}" id="media_${escapeHtml(nome)}">${media === '' ? '-' : media}</td>`;
+    html += '</tr>';
+  });
+
+  html += '</tbody></table>';
+  document.getElementById('registro-container').innerHTML = html;
+}
+
+/* escape per attributi/html */
+function escapeHtml(s){
+  if(!s && s!=='') return '';
+  return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+/* colore voti */
+function votoColorClass(v){
+  if(v === null || v === undefined || v === '') return '';
+  const V = String(v).toUpperCase().trim();
+  if(V === 'ASS' || V === 'ESON') return 'nero';
+  const n = parseInt(V);
+  if(!isNaN(n)){
+    return n >= 60 ? 'verde' : 'rosso';
+  }
+  return '';
+}
+
+/* calcolo media (solo numerici) */
+function calcMedia(arr){
+  if(!arr || arr.length===0) return '';
+  const numerici = arr.filter(v => !isNaN(parseInt(v))).map(v => parseInt(v));
+  if(numerici.length === 0) return '';
+  const somma = numerici.reduce((a,b)=>a+b,0);
+  return Math.round(somma / numerici.length);
+}
+
+/* ========== editing inline ========== */
+let editingTd = null;
+function startEdit(td){
+  if(editingTd) return;
+  const stud = td.dataset.stud;
+  const idx = parseInt(td.dataset.idx);
+  const key = getKey();
+  if(!registroDati[key]) registroDati[key] = { valutazioni: [], voti: {} };
+  if(!registroDati[key].voti[stud]) registroDati[key].voti[stud] = [];
+
+  const oldVal = td.innerText.trim();
+  td.innerHTML = `<input class="voto" id="input_${idx}" value="${oldVal}" />`;
+  const input = td.querySelector('input');
+  input.focus();
+  input.select();
+  editingTd = td;
+
+  function finish(){
+    const val = input.value.trim();
+    const normalized = val === '' ? '' : String(val).toUpperCase();
+    registroDati[key].voti[stud][idx] = normalized;
+    salvaLocal();
+    editingTd = null;
+    loadRegistro();
+  }
+
+  input.addEventListener('blur', finish);
+  input.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter') { finish(); }
+    if(e.key === 'Escape') { editingTd = null; loadRegistro(); }
+  });
+}
+
+/* ===== creazione valutazione (modal) ===== */
+const modal = document.getElementById('modalCrea');
+const btnCrea = document.getElementById('btnCreaVal');
+const btnAnnulla = document.getElementById('btnAnnulla');
+const btnCreaConf = document.getElementById('btnCreaConf');
+const modalMateria = document.getElementById('modalMateria');
+const modalData = document.getElementById('modalData');
+
+function popolaMaterieModal(){
+  const mainMat = document.getElementById('materiaSelect');
+  modalMateria.innerHTML = '';
+  Array.from(mainMat.options).forEach(opt=>{
+    const o = document.createElement('option'); o.value = opt.value || opt.text; o.innerText = opt.text;
+    modalMateria.appendChild(o);
+  });
+}
+
+btnCrea.addEventListener('click', ()=>{
+  popolaMaterieModal();
+  modalMateria.value = document.getElementById('materiaSelect').value;
+  modalData.value = todayIso();
+  modal.classList.add('show');
+});
+
+btnAnnulla.addEventListener('click', ()=> modal.classList.remove('show'));
+
+btnCreaConf.addEventListener('click', ()=>{
+  const mat = modalMateria.value;
+  const dataIso = modalData.value;
+  if(!dataIso){ alert('Seleziona la data'); return; }
+  const dataIt = isoToIt(dataIso);
+
+  document.getElementById('materiaSelect').value = mat;
+  const classe = document.getElementById('classeSelect').value;
+  const quad = document.getElementById('quadrimestreSelect').value;
+  const key = `${classe}_${quad}_${mat}`;
+
+  if(!registroDati[key]) registroDati[key] = { valutazioni: [], voti: {} };
+  registroDati[key].valutazioni.push({ data: dataIt });
+
+  salvaLocal();
+  modal.classList.remove('show');
+  loadRegistro();
+});
+
+/* onchange selects => reload */
+document.getElementById('classeSelect').addEventListener('change', loadRegistro);
+document.getElementById('quadrimestreSelect').addEventListener('change', loadRegistro);
+document.getElementById('materiaSelect').addEventListener('change', loadRegistro);
+
+/* init */
+loadRegistro();
+</script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accedi ai servizi</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body, html {
+      height: 100%;
+      width: 100%;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* SINISTRA */
+    .left {
+      flex: 1;
+      background-color: #fff;
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .left h1 {
+      font-size: 3rem;
+      color: #193a5e;
+      margin-bottom: 20px;
+    }
+
+    .left p {
+      color: #555;
+      margin-bottom: 40px;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      max-width: 500px;
+    }
+
+    .left button {
+      display: block;
+      width: 300px;
+      padding: 16px;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: #fff;
+      background-color: #44657a;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .left button:hover {
+      background-color: #2d4a5a;
+    }
+
+    /* DESTRA */
+    .right {
+      flex: 1;
+      background-color: #385a72;
+      color: #fff;
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+
+    .right h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .right p {
+      font-size: 1rem;
+      margin-bottom: 30px;
+      color: #cfd8df;
+    }
+
+    .close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .btn-mail, .btn-login {
+      width: 350px;
+      max-width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 6px;
+      background-color: #fff;
+      color: #1e2d3d;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 25px;
+      transition: background 0.3s;
+    }
+
+    .btn-mail:hover, .btn-login:hover {
+      background-color: #e4e4e4;
+    }
+
+    .input-group {
+      margin-bottom: 25px;
+      width: 350px;
+      max-width: 100%;
+    }
+
+    .input-group label {
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      background: transparent;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .forgot {
+      display: block;
+      width: 350px;
+      text-align: right;
+      font-size: 0.9rem;
+      margin-bottom: 25px;
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      font-size: 1rem;
+    }
+
+    .remember input {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- SINISTRA -->
+    <div class="left">
+      <h1>Accedi ai servizi</h1>
+      <p>Da qui puoi accedere ai diversi servizi della scuola che richiedono una autenticazione personale.</p>
+      
+      <button onclick="location.href='registro_famiglie.html'">Registro Famiglie</button>
+      <button onclick="location.href='registro_docenti.html'">Registro Docenti</button>
+      <button onclick="location.href='messa_disposizione.html'">Messa a Disposizione</button>
+    </div>
+
+    <!-- DESTRA -->
+    <div class="right">
+      <span class="close">&times;</span>
+      <h2>Personale scolastico</h2>
+      <p>Entra nell' area riservata premendo Usa la mail istituzionale.</p>
+      <button class="btn-mail">Usa la Mail Istituzionale</button>
+
+      <div class="input-group">
+        <label>La tua email</label>
+        <input type="email" placeholder="Inserisci email">
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="Inserisci password">
+      </div>
+
+      <a href="#" class="forgot">Password dimenticata?</a>
+
+      <div class="remember">
+        <input type="checkbox" id="ricordami">
+        <label for="ricordami">Ricordami</label>
+      </div>
+
+      <button class="btn-login">Accedi</button>
+    </div>
+  </div>
+
+  <script>
+    // Chiudi la finestra (simulato)
+    document.querySelector('.close').addEventListener('click', () => {
+      alert("Chiusura simulata!");
+    });
+  </script>
+</body>
+</html>
