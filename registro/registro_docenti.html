@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro Docenti - Login</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: #b7e0ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      display: flex;
+      background: none;
+      width: 100%;
+      max-width: 1200px;
+      gap: 40px;
+    }
+    .login-box {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      width: 380px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      outline: none;
+      font-size: 1rem;
+    }
+    .remember {
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+    }
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    .btn-blue {
+      background: #2d94d4;
+      color: #fff;
+    }
+    .btn-blue:hover {
+      background: #227bb3;
+    }
+    .btn-red {
+      background: #e74c3c;
+      color: #fff;
+    }
+    .btn-red:hover {
+      background: #c0392b;
+    }
+    .error {
+      color: red;
+      text-align: center;
+      margin-bottom: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- LOGIN -->
+    <div class="login-box">
+      <h2>didUP - Docenti</h2>
+      <div class="error" id="error-msg">Credenziali errate!</div>
+
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Nome Utente">
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password">
+      </div>
+      <div class="input-group">
+        <input type="text" id="codice" placeholder="Codice Scuola">
+      </div>
+
+      <div class="remember">
+        <input type="checkbox" id="ricordami"> <label for="ricordami">Ricordami</label>
+      </div>
+
+      <button class="btn btn-blue" onclick="login()">ENTRA</button>
+      <button class="btn btn-red" onclick="location.href='index.html'">TORNA INDIETRO</button>
+    </div>
+  </div>
+
+  <script>
+    function login() {
+      const utentiValidi = [
+        "pikky.pomodoro",
+        "pippy.pomodoro",
+        "spinaci.verdi",
+        "alessia.dematteis",
+        "enrico.dematteis",
+        "davide.frollino",
+        "insalata.russa"
+      ];
+      const passwordCorretta = "cfp.2024";
+      const codiceCorretto = "sc2108df";
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const codice = document.getElementById("codice").value.trim();
+      const errorMsg = document.getElementById("error-msg");
+
+      if (utentiValidi.includes(username) && password === passwordCorretta && codice === codiceCorretto) {
+        window.location.href = "area_docenti.html";
+      } else {
+        errorMsg.style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>

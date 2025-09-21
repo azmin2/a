@@ -1,0 +1,12 @@
+[
+  {
+    "username": "docente1",
+    "password": "$2b$10$hash_password_bcrypt",
+    "ruolo": "docente"
+  },
+  {
+    "username": "famiglia1",
+    "password": "$2b$10$hash_password_bcrypt",
+    "ruolo": "famiglia"
+  }
+]

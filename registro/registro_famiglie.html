@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro Famiglie</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background-color: #b7e0ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: 1200px;
+      background: none;
+      gap: 40px;
+    }
+
+    /* COLONNA SINISTRA (LOGIN) */
+    .login-box {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      width: 380px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .extra-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      margin-top: -10px;
+      margin-bottom: 20px;
+    }
+
+    .extra-links a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+    }
+
+    .remember input {
+      margin-right: 8px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    .btn-blue {
+      background: #2d94d4;
+      color: #fff;
+    }
+
+    .btn-blue:hover {
+      background: #227bb3;
+    }
+
+    .btn-red {
+      background: #e74c3c;
+      color: #fff;
+    }
+
+    .btn-red:hover {
+      background: #c0392b;
+    }
+
+    .or {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    .btn-alt {
+      background: #004aad;
+      color: #fff;
+      padding: 14px;
+      width: 100%;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-alt:hover {
+      background: #00347a;
+    }
+
+    .logos {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .logos img {
+      height: 40px;
+      margin: 5px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #555;
+      margin-top: 15px;
+    }
+
+    /* COLONNA DESTRA (PUBBLICITÀ) */
+    .promo {
+      flex: 1;
+      background: #fff;
+      border-radius: 10px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+
+    .promo h1 {
+      color: #193a5e;
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    .promo button {
+      padding: 10px 25px;
+      background: #1e2d3d;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .promo button:hover {
+      background: #000;
+    }
+
+    .promo img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- LOGIN -->
+    <div class="login-box">
+      <h2>Famiglia</h2>
+
+      <div class="input-group">
+        <label>Codice Scuola</label>
+        <input type="text" placeholder="Inserisci il codice scuola">
+      </div>
+
+      <div class="input-group">
+        <label>Nome Utente</label>
+        <input type="text" placeholder="Inserisci il nome utente">
+      </div>
+
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" placeholder="Inserisci la password">
+      </div>
+
+      <div class="extra-links">
+        <label></label>
+        <a href="#">Recupera la password</a>
+      </div>
+
+      <div class="remember">
+        <input type="checkbox" id="ricordami">
+        <label for="ricordami">Ricordami</label>
+      </div>
+
+      <button class="btn btn-blue">ENTRA</button>
+      <button class="btn btn-red" onclick="location.href='index.html'">TORNA INDIETRO</button>
+
+      <div class="or">OPPURE</div>
+
+      <button class="btn-alt">SPID - CIE - EIDAS</button>
+
+      <div class="logos">
+        <img src="https://www.portaleargo.it/assets/auth/images/logo_argo.png" alt="ARGO">
+        <img src="https://www.portaleargo.it/assets/auth/images/rina.png" alt="SPID" height="40">
+      </div>
+
+      <div class="footer">© Tutti i diritti riservati</div>
+    </div>
+
+    <!-- PROMO -->
+    <div class="promo">
+      <h1>È arrivato PLUS!</h1>
+      <button>SCOPRI DI PIÙ</button>
+      <img src="https://cdn.portaleargo.it/assets/promo/default/LoginPlus.png" alt="Promo">
+    </div>
+  </div>
+</body>
+</html>
