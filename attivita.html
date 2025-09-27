@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Elegante</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: #0f0f0f;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 450px;
+      height: 90vh;
+      background: #1c1c1c;
+      display: flex;
+      flex-direction: column;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+
+    /* HEADER */
+    .chat-header {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chat-header img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    /* AREA CHAT */
+    #chat {
+      flex: 1;
+      padding: 15px;
+      background: #121212;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .msg {
+      max-width: 70%;
+      padding: 10px 14px;
+      margin: 6px 0;
+      border-radius: 18px;
+      font-size: 14px;
+      line-height: 1.4;
+      animation: fadeIn 0.3s ease;
+      word-wrap: break-word;
+    }
+
+    .mine {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+      color: white;
+      border-bottom-right-radius: 5px;
+    }
+
+    .other {
+      align-self: flex-start;
+      background: #2a2a2a;
+      color: #e0e0e0;
+      border-bottom-left-radius: 5px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* FORM */
+    #form {
+      display: flex;
+      background: #1e1e1e;
+      padding: 12px;
+    }
+
+    #msgInput {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 25px;
+      outline: none;
+      font-size: 14px;
+      background: #2c2c2c;
+      color: white;
+    }
+
+    #sendBtn {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      border: none;
+      color: white;
+      padding: 12px 15px;
+      margin-left: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    #sendBtn:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">
+      <img src="https://i.pravatar.cc/100" alt="avatar">
+      Chat Premium
+    </div>
+    <div id="chat"></div>
+    <form id="form">
+      <input type="text" id="msgInput" placeholder="✍️ Scrivi un messaggio..." required />
+      <button id="sendBtn" type="submit">➤</button>
+    </form>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    // 🔹 CONFIGURA QUI IL TUO FIREBASE
+    const firebaseConfig = {
+      apiKey: "API_KEY",
+      authDomain: "PROJECT_ID.firebaseapp.com",
+      databaseURL: "https://PROJECT_ID-default-rtdb.firebaseio.com",
+      projectId: "PROJECT_ID",
+      storageBucket: "PROJECT_ID.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const chat = document.getElementById("chat");
+    const form = document.getElementById("form");
+    const msgInput = document.getElementById("msgInput");
+
+    // Identificativo utente
+    const userId = "user_" + Math.floor(Math.random() * 10000);
+
+    // Ricezione messaggi
+    db.ref("messages").on("child_added", snapshot => {
+      const data = snapshot.val();
+      const div = document.createElement("div");
+      div.className = "msg " + (data.user === userId ? "mine" : "other");
+      div.textContent = data.text;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    });
+
+    // Invio messaggio
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const text = msgInput.value;
+      db.ref("messages").push({ text, user: userId });
+      msgInput.value = "";
+    });
+  </script>
+</body>
+</html>
