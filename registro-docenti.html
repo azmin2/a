@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>didUP - Login</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .left-section {
+            width: 40%;
+            background-color: #f5f5f5;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .right-section {
+            width: 60%;
+            background: linear-gradient(135deg, #a8d8ea 0%, #7ec8e3 100%);
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #666;
+            font-size: 28px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .logo-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #5dade2 0%, #64c5d8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 40px;
+            position: relative;
+        }
+
+        .mustache-left, .mustache-right {
+            position: absolute;
+            width: 35px;
+            height: 20px;
+            border: 3px solid;
+            border-radius: 50%;
+        }
+
+        .mustache-left {
+            left: 0;
+            border-color: #f4a460 transparent transparent transparent;
+            transform: rotate(-20deg);
+        }
+
+        .mustache-right {
+            right: 0;
+            border-color: #81c784 transparent transparent transparent;
+            transform: rotate(20deg);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            background-color: transparent;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-bottom-color: #5dade2;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: 8px;
+        }
+
+        .forgot-password a {
+            color: #5dade2;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+        }
+
+        .remember-me input[type="checkbox"] {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+
+        .remember-me label {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .remember-me a {
+            color: #5dade2;
+            text-decoration: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: opacity 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-login {
+            background-color: #5dade2;
+            color: white;
+        }
+
+        .btn-back {
+            background-color: #e57373;
+            color: white;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            color: #999;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .alternative-login {
+            text-align: center;
+        }
+
+        .alternative-login label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .alternative-login label i {
+            margin-right: 8px;
+        }
+
+        .spid-btn {
+            background-color: #0066cc;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spid-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .footer-logos {
+            margin-top: auto;
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .argo-logo {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .argo-letter {
+            width: 25px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 3px;
+        }
+
+        .argo-text {
+            color: #999;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            color: #999;
+            font-size: 11px;
+            margin-top: 15px;
+        }
+
+        .right-header {
+            text-align: right;
+            margin-bottom: 30px;
+        }
+
+        .plus-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .plus-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1a1a1a;
+        }
+
+        .scopri-btn {
+            background-color: #1a3a52;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .promo-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-top: 20px;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .scuolanext-logo {
+            margin-bottom: 30px;
+        }
+
+        .features-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .feature-diamond {
+            width: 140px;
+            height: 140px;
+            background-color: #4a90e2;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .feature-diamond.light {
+            background-color: #7ec8e3;
+        }
+
+        .feature-diamond.center {
+            background-color: #1a3a52;
+            width: 160px;
+            height: 160px;
+        }
+
+        .feature-text {
+            transform: rotate(-45deg);
+            color: white;
+            font-size: 11px;
+            text-align: center;
+            padding: 15px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .plus-description {
+            color: #1a3a52;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 30px;
+            line-height: 1.5;
+        }
+
+        .right-footer-logo {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+        }
+
+        .decorative-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .triangle-1 {
+            bottom: 0;
+            left: 0;
+            border-width: 0 0 200px 200px;
+            border-color: transparent transparent #5ba8d4 transparent;
+        }
+
+        .triangle-2 {
+            top: 50px;
+            right: 0;
+            border-width: 150px 200px 0 0;
+            border-color: #3579b8 transparent transparent transparent;
+        }
+
+        .triangle-3 {
+            bottom: 0;
+            right: 0;
+            border-width: 0 300px 250px 0;
+            border-color: transparent #1a3a52 transparent transparent;
+        }
+
+        .pnrr-logo {
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="left-section">
+        <div class="header">
+            <div class="logo-circle">
+                <div class="logo-icon">
+                    <div class="mustache-left"></div>
+                    <div class="mustache-right"></div>
+                </div>
+            </div>
+            <h1>didUP</h1>
+        </div>
+
+        <form>
+            <div class="form-group">
+                <label><i class="fas fa-user"></i> Nome Utente</label>
+                <input type="text">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-lock"></i> Password</label>
+                <div class="password-container">
+                    <input type="password" id="password">
+                    <i class="fas fa-eye password-toggle" onclick="togglePassword()"></i>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Recupera la password</a>
+                </div>
+            </div>
+
+            <div class="remember-me">
+                <input type="checkbox" id="remember">
+                <label for="remember">
+                    Cliccando su "Ricordami" non dovrai più autenticarti su questo dispositivo per accedere alle applicazioni. 
+                    <a href="#">Informativa SSO</a>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-login">ENTRA</button>
+            <button type="button" class="btn btn-back">TORNA INDIETRO</button>
+        </form>
+
+        <div class="divider">OPPURE</div>
+
+        <div class="alternative-login">
+            <label><i class="fas fa-school"></i> Codice Scuola</label>
+            <button type="button" class="spid-btn">
+                <i class="fas fa-fingerprint"></i>
+                SPID - CIE - EIDAS
+            </button>
+        </div>
+
+        <div class="footer-logos">
+            <div class="argo-logo">
+                <div class="argo-letter" style="background-color: #5dade2;">A</div>
+                <div class="argo-letter" style="background-color: #81c784;">R</div>
+                <div class="argo-letter" style="background-color: #ffd54f;">G</div>
+                <div class="argo-letter" style="background-color: #e57373;">O</div>
+                <span class="argo-text">software</span>
+            </div>
+            <img src="https://via.placeholder.com/80x40/0066cc/ffffff?text=PNRR" alt="PNRR" class="pnrr-logo">
+        </div>
+
+        <div class="copyright">© Tutti i diritti riservati</div>
+    </div>
+
+    <div class="right-section">
+        <div class="decorative-shapes">
+            <div class="triangle triangle-1"></div>
+            <div class="triangle triangle-2"></div>
+            <div class="triangle triangle-3"></div>
+        </div>
+
+        <div class="right-header">
+            <div class="plus-banner">
+                <h2 class="plus-text">È arrivato PLUS!</h2>
+                <button class="scopri-btn">SCOPRI DI PIÙ</button>
+            </div>
+        </div>
+
+        <div class="promo-content">
+            <div class="scuolanext-logo">
+                <svg width="150" height="30" viewBox="0 0 150 30">
+                    <path d="M0 5 L10 5 L15 15 L10 25 L0 25 Z" fill="#5dade2"/>
+                    <text x="20" y="20" font-family="Arial" font-size="16" font-weight="bold" fill="#1a3a52">SCUOLA</text>
+                    <text x="85" y="20" font-family="Arial" font-size="16" font-weight="bold" fill="#5dade2">NEXT</text>
+                    <text x="130" y="20" font-family="Arial" font-size="20" font-weight="bold" fill="#5dade2">+</text>
+                </svg>
+            </div>
+
+            <div class="features-diagram">
+                <div class="feature-diamond light">
+                    <div class="feature-text">Attività<br>collegiali e<br>firma del<br>verbale</div>
+                </div>
+                <div class="feature-diamond center">
+                    <div class="feature-text">Credenziali<br>famiglia</div>
+                </div>
+                <div class="feature-diamond light">
+                    <div class="feature-text">Bacheca<br>alunno</div>
+                </div>
+                <div class="feature-diamond">
+                    <div class="feature-text">Personalizzazione<br>documenti</div>
+                </div>
+                <div class="feature-diamond">
+                    <div class="feature-text">Archivio stampe<br>centralizzato</div>
+                </div>
+                <div class="feature-diamond light">
+                    <div class="feature-text">Bacheca<br>scuola</div>
+                </div>
+            </div>
+
+            <p class="plus-description">
+                È arrivato PLUS<br>
+                il modulo che rende<br>
+                la gestione dell'area<br>
+                didattica ancora più<br>
+                completa!
+            </p>
+        </div>
+
+        <div class="right-footer-logo">
+            <div class="argo-logo">
+                <div class="argo-letter" style="background-color: #5dade2;">A</div>
+                <div class="argo-letter" style="background-color: #81c784;">R</div>
+                <div class="argo-letter" style="background-color: #ffd54f;">G</div>
+                <div class="argo-letter" style="background-color: #e57373;">O</div>
+                <span class="argo-text">software</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const icon = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
+</body>
+</html>
