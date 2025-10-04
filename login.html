@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accedi ai servizi - Istituto Cigna Baruffi Garelli</title>
+  <style>
+    body { margin: 0; font-family: "Poppins", sans-serif; display: flex; height: 100vh; }
+    .left, .right { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 40px; }
+    .left { background: #f7f9fb; color: #1c3f55; }
+    .right { background: #2f4d63; color: white; }
+    h1, h2 { margin-bottom: 20px; }
+    button, a { display: block; margin: 10px 0; padding: 10px 20px; border: none; border-radius: 6px; text-decoration: none; text-align: center; cursor: pointer; }
+    .btn { background: #3c6e8f; color: white; }
+    input { margin: 10px 0; padding: 10px; width: 250px; border-radius: 4px; border: 1px solid #ccc; }
+    .login-btn { background: #f8f9fa; color: #1c3f55; cursor: pointer; }
+    .link { color: white; text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <div class="left">
+    <h1>Accedi ai servizi</h1>
+    <p>Da qui puoi accedere ai diversi servizi della scuola che richiedono un'autenticazione personale.</p>
+    <a href="registro-famiglie.html" class="btn">Registro Famiglie</a>
+    <a href="registro-docenti.html" class="btn">Registro Docenti</a>
+    <a href="messa-a-disposizione.html" class="btn">Messa a Disposizione</a>
+  </div>
+
+  <div class="right">
+    <h2>Personale scolastico</h2>
+    <button class="login-btn">Usa la Mail Istituzionale</button>
+    <input type="email" placeholder="La tua email">
+    <input type="password" placeholder="Password">
+    <button class="login-btn">Accedi</button>
+    <a href="#" class="link">Password dimenticata?</a>
+  </div>
+
+</body>
+</html>
