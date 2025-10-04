@@ -667,47 +667,47 @@
                     <i class="fas fa-home"></i>
                     <span>Home</span>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="goToPage('registro')">
                     <i class="fas fa-user-graduate"></i>
                     <span>Registro</span>
                     <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="goToPage('scrutini')">
                     <i class="fas fa-clipboard"></i>
                     <span>Scrutini</span>
                     <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="goToPage('didattica')">
                     <i class="fas fa-book"></i>
                     <span>Didattica</span>
                     <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="goToPage('bacheca')">
                     <i class="fas fa-bullhorn"></i>
                     <span>Bacheca</span>
                     <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="goToPage('comunicazioni')">
                     <i class="fas fa-comments"></i>
                     <span>Comunicazioni</span>
                     <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="goToPage('orario')">
                     <i class="fas fa-clock"></i>
                     <span>Orario</span>
                     <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="goToPage('stampe')">
                     <i class="fas fa-stamp"></i>
                     <span>Stampe</span>
                     <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="goToPage('servizi-personale')">
                     <i class="fas fa-user-circle"></i>
                     <span>Servizi Personale</span>
                     <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
                 </div>
-                <div class="menu-item">
+                <div class="menu-item" onclick="goToPage('strumenti')">
                     <i class="fas fa-tools"></i>
                     <span>Strumenti</span>
                     <i class="fas fa-chevron-right" style="margin-left: auto;"></i>
@@ -872,6 +872,10 @@
 
         function goToClass(className) {
             alert('Navigazione alla pagina della classe: ' + className + '\nQuesta funzionalità richiede un HTML separato per ogni classe.');
+        }
+
+        function goToPage(pageName) {
+            alert('Navigazione a: ' + pageName.toUpperCase() + '\nQuesta sezione richiede un HTML separato.\n\nPer implementarla, crea un file chiamato:\n' + pageName + '.html');
         }
     </script>
 </body>
